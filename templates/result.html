@@ -245,7 +245,7 @@
             fetch(`/api/result/${assessmentType}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
+                    if (data.success === true) {
                         const result = data.result;
                         
                         // 隐藏加载指示器
