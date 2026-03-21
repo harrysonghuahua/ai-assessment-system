@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI潜能测评与生涯导航系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>AI潜能测评与生涯导航系统</h1>
+            <p class="subtitle">基于大模型的多维度潜能测评与动态生涯路径发展导航</p>
+        </header>
+
+        <main class="main-content">
+            <div class="intro-section">
+                <h2>欢迎使用AI潜能测评系统</h2>
+                <p>本系统通过四个维度的专业测评，结合AI大模型分析，为您提供全面的潜能评估和个性化的生涯发展建议。</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>性格测评</h3>
+                    <p>分析您的性格特点和行为风格</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💪</div>
+                    <h3>能力测评</h3>
+                    <p>评估您的核心能力和技能水平</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>职业兴趣</h3>
+                    <p>探索您的职业倾向和兴趣领域</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>学习风格</h3>
+                    <p>了解您的学习方式和思维特点</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <button onclick="window.location.href='/assessment'" class="btn-primary">
+                    开始测评
+                </button>
+                <button onclick="window.location.href='/about'" class="btn-secondary" style="margin-left: 15px;">
+                    测评说明
+                </button>
+                <button onclick="window.location.href='/comprehensive-report'" class="btn-secondary" style="margin-left: 15px;">
+                    查看综合报告
+                </button>
+                <button onclick="window.location.href='/history'" class="btn-secondary" style="margin-left: 15px;">
+                    查看历史记录
+                </button>
+                <p class="note">预计完成时间：15-20分钟 | 基于MBTI、Big Five、霍兰德理论等经典心理学模型</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+</body>
+</html>

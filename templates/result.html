@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测评结果 - AI潜能测评系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>测评结果</h1>
+            <p class="subtitle">基于AI大模型的个性化分析报告</p>
+        </header>
+
+        <main class="main-content">
+            <div class="result-notification">
+                <div class="notification-icon">✅</div>
+                <div class="notification-content">
+                    <h3>测评已完成！</h3>
+                    <p>您的AI分析报告已生成，请查看下方详细内容</p>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.style.display='none'">✕</button>
+            </div>
+
+            <div class="result-section">
+                <div class="result-header">
+                    <h2>{{ assessment_title }}</h2>
+                    <p class="result-date">测评时间：{{ result_date }}</p>
+                </div>
+
+                <div class="result-content">
+                    <div class="result-card theory-card">
+                        <h3>📚 测评理论基础</h3>
+                        <div class="theory-content" id="theoryContent">
+                            <p>本测评基于科学的心理学理论和职业发展模型，确保结果的专业性和准确性。</p>
+                            <div class="theory-details">
+                                <div class="theory-item">
+                                    <span class="theory-label">理论模型：</span>
+                                    <span class="theory-value" id="theoryModel">加载中...</span>
+                                </div>
+                                <div class="theory-item">
+                                    <span class="theory-label">测评维度：</span>
+                                    <span class="theory-value" id="theoryDimensions">加载中...</span>
+                                </div>
+                                <div class="theory-item">
+                                    <span class="theory-label">信效度：</span>
+                                    <span class="theory-value">经过专业验证，具有良好的信度和效度</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>📊 测评概览</h3>
+                        <div class="overview-content">
+                            <div class="overview-item">
+                                <span class="label">测评类型：</span>
+                                <span class="value">{{ assessment_title }}</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="label">完成题目：</span>
+                                <span class="value">{{ completed_questions }}题</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="label">测评状态：</span>
+                                <span class="value status-completed">已完成</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card radar-card">
+                        <h3>📈 能力雷达图</h3>
+                        <div class="radar-container">
+                            <canvas id="radarChart" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>🔬 专业测评分析</h3>
+                        <div class="ai-analysis" id="aiAnalysis">
+                            <div class="analysis-content">
+                                <div class="loading-indicator" id="analysisLoading">
+                                    <div class="loading-spinner"></div>
+                                    <p>AI正在生成专业分析...请稍候</p>
+                                </div>
+                                <div id="analysisContent"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>💡 个性化发展建议</h3>
+                        <div class="suggestions" id="suggestions">
+                            <div class="suggestions-content">
+                                <div id="suggestionsContent"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>🎯 职业发展路径规划</h3>
+                        <div class="career-path" id="careerPath">
+                            <div class="career-path-content">
+                                <div id="careerPathContent"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card integration-card">
+                        <h3>🔗 多维度关联分析</h3>
+                        <div class="integration-content" id="integrationContent">
+                            <p class="integration-intro">本测评结果将与其他维度测评相互印证，形成完整的个人潜能画像。</p>
+                            <div class="integration-status">
+                                <p><strong>建议：</strong>完成所有四个维度测评后，查看综合报告，获得更全面的分析。</p>
+                                <div class="integration-progress">
+                                    <span class="progress-label">测评进度：</span>
+                                    <span class="progress-value" id="integrationProgress">加载中...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.location.href='/assessment'" class="btn-secondary">
+                    继续其他测评
+                </button>
+                <button onclick="resetAssessment()" class="btn-danger">
+                    重新测试
+                </button>
+                <button onclick="window.location.href='/comprehensive-report'" class="btn-primary" id="viewComprehensiveBtn">
+                    查看综合报告
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+
+    <script>
+        // 测评理论配置
+        const theoryConfig = {
+            'personality': {
+                model: 'MBTI性格类型理论 + 五大人格模型（Big Five）',
+                dimensions: '外向性/内向性、开放性、尽责性、宜人性、神经质'
+            },
+            'ability': {
+                model: '多元智能理论 + 核心职业能力模型',
+                dimensions: '逻辑思维能力、创新能力、沟通能力、执行能力、学习能力'
+            },
+            'interest': {
+                model: '霍兰德职业兴趣理论（RIASEC模型）',
+                dimensions: '现实型、研究型、艺术型、社会型、企业型、常规型'
+            },
+            'learning': {
+                model: '科尔布学习风格模型 + 认知风格理论',
+                dimensions: '视觉型/言语型、主动型/反思型、理论型/实践型、独立型/协作型'
+            }
+        };
+
+        // 获取当前测评类型
+        const currentAssessmentType = '{{ assessment_type }}';
+
+        // 显示理论信息
+        function displayTheoryInfo() {
+            try {
+                const config = theoryConfig[currentAssessmentType];
+                if (config) {
+                    const theoryModel = document.getElementById('theoryModel');
+                    const theoryDimensions = document.getElementById('theoryDimensions');
+                    if (theoryModel) theoryModel.textContent = config.model;
+                    if (theoryDimensions) theoryDimensions.textContent = config.dimensions;
+                }
+            } catch (error) {
+                console.error('显示理论信息失败:', error);
+            }
+        }
+
+        // 加载测评进度
+        function loadProgress() {
+            try {
+                fetch('/api/progress')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateProgressUI(data.progress);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('加载进度失败:', error);
+                    });
+            } catch (error) {
+                console.error('加载进度函数出错:', error);
+            }
+        }
+
+        // 更新进度UI
+        function updateProgressUI(progress) {
+            try {
+                const progressText = `${progress.completed.length}/${progress.total}`;
+                const integrationProgress = document.getElementById('integrationProgress');
+                if (integrationProgress) {
+                    integrationProgress.textContent = progressText;
+                }
+
+                // 如果已完成所有测评，显示查看综合报告按钮
+                const comprehensiveBtn = document.getElementById('viewComprehensiveBtn');
+                if (comprehensiveBtn) {
+                    if (progress.percentage === 100) {
+                        comprehensiveBtn.style.display = 'inline-block';
+                        comprehensiveBtn.textContent = '🎉 查看综合报告';
+                    } else {
+                        comprehensiveBtn.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('更新进度UI失败:', error);
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                console.log('页面加载完成，开始初始化...');
+                displayTheoryInfo();
+                loadProgress();
+                loadRadarData();
+                loadAIResults();
+                console.log('初始化完成');
+            } catch (error) {
+                console.error('页面初始化失败:', error);
+                document.body.innerHTML = '<div style="padding: 20px; text-align: center;"><h2>页面加载出错</h2><p>请刷新页面重试</p><p>错误信息: ' + error.message + '</p></div>';
+            }
+        });
+
+        // 加载AI分析结果（流式）
+        function loadAIResults() {
+            const assessmentType = '{{ assessment_type }}';
+            const loadingIndicator = document.getElementById('analysisLoading');
+            
+            fetch(`/api/result/${assessmentType}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const result = data.result;
+                        
+                        // 隐藏加载指示器
+                        if (loadingIndicator) {
+                            loadingIndicator.style.display = 'none';
+                        }
+                        
+                        // 显示分析结果
+                        document.getElementById('analysisContent').innerHTML = result.analysis || '暂无分析结果';
+                        document.getElementById('suggestionsContent').innerHTML = result.suggestions || '暂无建议';
+                        document.getElementById('careerPathContent').innerHTML = result.career_path || '暂无职业规划';
+                    } else {
+                        // 显示错误信息
+                        if (loadingIndicator) {
+                            loadingIndicator.innerHTML = `
+                                <div class="error-message">
+                                    <p>AI分析生成失败：${data.error || '未知错误'}</p>
+                                    <p>请尝试重新完成测评</p>
+                                </div>
+                            `;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('加载AI结果失败:', error);
+                    if (loadingIndicator) {
+                        loadingIndicator.innerHTML = `
+                            <div class="error-message">
+                                <p>网络错误：无法连接到服务器</p>
+                                <p>请检查网络连接后重试</p>
+                            </div>
+                        `;
+                    }
+                });
+        }
+
+        // 加载雷达图数据
+        function loadRadarData() {
+            try {
+                // 从后端获取分数数据，避免模板渲染问题
+                const assessmentType = '{{ assessment_type }}';
+                fetch(`/api/result/${assessmentType}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.result && data.result.scores) {
+                            const scores = data.result.scores;
+                            if (Object.keys(scores).length > 0) {
+                                drawRadarChart(scores);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('加载雷达图数据失败:', error);
+                    });
+            } catch (error) {
+                console.error('加载雷达图数据失败:', error);
+            }
+        }
+
+        // 绘制雷达图
+        function drawRadarChart(userScores) {
+            const canvas = document.getElementById('radarChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 150;
+
+            // 获取维度名称
+            const dimensions = Object.keys(userScores);
+            if (dimensions.length === 0) return;
+            
+            const angleStep = (Math.PI * 2) / dimensions.length;
+
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制背景网格
+            for (let i = 1; i <= 5; i++) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 1;
+                for (let j = 0; j < dimensions.length; j++) {
+                    const angle = j * angleStep - Math.PI / 2;
+                    const r = (radius / 5) * i;
+                    const x = centerX + Math.cos(angle) * r;
+                    const y = centerY + Math.sin(angle) * r;
+                    if (j === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            // 绘制轴线
+            for (let i = 0; i < dimensions.length; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + Math.cos(angle) * radius;
+                const y = centerY + Math.sin(angle) * radius;
+                ctx.beginPath();
+                ctx.strokeStyle = '#ccc';
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                // 绘制维度标签
+                const labelX = centerX + Math.cos(angle) * (radius + 25);
+                const labelY = centerY + Math.sin(angle) * (radius + 25);
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(dimensions[i], labelX, labelY);
+            }
+
+            // 绘制用户数据
+            drawDataPolygon(ctx, userScores, dimensions, angleStep, centerX, centerY, radius, 'rgba(255, 107, 107, 0.3)', '#ff6b6b');
+        }
+
+        // 绘制数据多边形
+        function drawDataPolygon(ctx, scores, dimensions, angleStep, centerX, centerY, radius, fillColor, strokeColor) {
+            ctx.beginPath();
+            for (let i = 0; i < dimensions.length; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const value = scores[dimensions[i]] || 50;
+                const r = (value / 100) * radius;
+                const x = centerX + Math.cos(angle) * r;
+                const y = centerY + Math.sin(angle) * r;
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fillStyle = fillColor;
+            ctx.fill();
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 绘制数据点
+        for (let i = 0; i < dimensions.length; i++) {
+            const angle = i * angleStep - Math.PI / 2;
+            const value = scores[dimensions[i]] || 50;
+            const r = (value / 100) * radius;
+            const x = centerX + Math.cos(angle) * r;
+            const y = centerY + Math.sin(angle) * r;
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = strokeColor;
+            ctx.fill();
+        }
+    }
+
+    // 重新测试函数
+    function resetAssessment() {
+        if (confirm('确定要重新测试吗？当前测评结果将被清除。')) {
+            const assessmentType = '{{ assessment_type }}';
+            
+            fetch(`/api/reset/${assessmentType}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('测评已重置，即将开始重新测试');
+                    window.location.href = `/assessment/${assessmentType}`;
+                } else {
+                    alert('重置失败，请重试');
+                }
+            })
+            .catch(error => {
+                console.error('重置失败:', error);
+                alert('重置失败，请重试');
+            });
+        }
+    }
+</script>
+</body>
+</html>

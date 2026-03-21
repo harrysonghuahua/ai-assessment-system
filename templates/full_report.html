@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完整报告 - AI潜能测评系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>完整测评报告</h1>
+            <p class="subtitle">您的多维度潜能测评综合分析</p>
+        </header>
+
+        <main class="main-content">
+            <div id="reportContainer">
+                <div class="loading-spinner"></div>
+                <p>正在生成完整报告...</p>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.location.href='/assessment'" class="btn-secondary">
+                    继续测评
+                </button>
+                <button onclick="window.location.href='/comprehensive-report'" class="btn-primary">
+                    查看综合报告
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+
+    <script>
+        function loadFullReport() {
+            fetch('/api/full-report')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayReport(data.report);
+                    } else {
+                        showError('加载报告失败');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('加载报告失败');
+                });
+        }
+
+        function displayReport(report) {
+            const container = document.getElementById('reportContainer');
+            
+            if (report.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <h3>暂无测评记录</h3>
+                        <p>您还没有完成任何测评，快去试试吧！</p>
+                        <button onclick="window.location.href='/assessment'" class="btn-primary">
+                            开始测评
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="report-grid">';
+            
+            report.forEach(item => {
+                const date = new Date(item.timestamp);
+                const formattedDate = date.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                html += `
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-icon">${getIcon(item.type)}</div>
+                            <div class="report-info">
+                                <h3>${item.title}</h3>
+                                <p class="report-date">${formattedDate}</p>
+                            </div>
+                        </div>
+                        <div class="report-content">
+                            <div class="report-section">
+                                <h4>📊 测评概览</h4>
+                                <p><strong>完成题目：</strong>${item.question_count}题</p>
+                                <p><strong>测评状态：</strong>已完成</p>
+                            </div>
+                            <div class="report-section">
+                                <h4>🤖 AI分析结果</h4>
+                                <div class="report-analysis">
+                                    ${item.result.analysis}
+                                </div>
+                            </div>
+                            <div class="report-section">
+                                <h4>🎯 个性化建议</h4>
+                                <div class="report-suggestions">
+                                    ${item.result.suggestions}
+                                </div>
+                            </div>
+                            <div class="report-section">
+                                <h4>📈 发展路径</h4>
+                                <div class="report-career">
+                                    ${item.result.career_path}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += `
+                <div class="report-notice">
+                    <p><strong>💡 提示：</strong>完成所有四个测评后，可以生成综合报告，获得更全面的分析建议。</p>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function getIcon(type) {
+            const icons = {
+                'personality': '🧠',
+                'ability': '💪',
+                'interest': '🎯',
+                'learning': '📚'
+            };
+            return icons[type] || '📋';
+        }
+
+        function showError(message) {
+            document.getElementById('reportContainer').innerHTML = `
+                <div class="error-state">
+                    <p>${message}</p>
+                    <button onclick="loadFullReport()" class="btn-secondary">重试</button>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFullReport();
+        });
+    </script>
+</body>
+</html>

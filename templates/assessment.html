@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择测评维度 - AI潜能测评系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>选择测评维度</h1>
+            <p class="subtitle">请选择您想要进行的测评项目</p>
+        </header>
+
+        <main class="main-content">
+            <div id="progressSection" class="progress-section">
+                <div class="progress-header">
+                    <h3>📊 测评进度</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">已完成 0/4 个测评</p>
+                </div>
+                <div class="progress-details" id="progressDetails">
+                    <p>正在加载进度...</p>
+                </div>
+            </div>
+
+            <div class="assessment-grid">
+                <div class="assessment-card" onclick="startAssessment('personality')">
+                    <div class="assessment-icon">🧠</div>
+                    <h3>性格测评</h3>
+                    <p class="assessment-desc">基于MBTI和五大人格理论，分析您的性格特点</p>
+                    <div class="assessment-info">
+                        <span>⏱️ 5分钟</span>
+                        <span>📝 20题</span>
+                    </div>
+                    <button class="btn-card">开始测评</button>
+                </div>
+
+                <div class="assessment-card" onclick="startAssessment('ability')">
+                    <div class="assessment-icon">💪</div>
+                    <h3>能力测评</h3>
+                    <p class="assessment-desc">评估您的逻辑思维、创造力、沟通能力等核心能力</p>
+                    <div class="assessment-info">
+                        <span>⏱️ 5分钟</span>
+                        <span>📝 15题</span>
+                    </div>
+                    <button class="btn-card">开始测评</button>
+                </div>
+
+                <div class="assessment-card" onclick="startAssessment('interest')">
+                    <div class="assessment-icon">🎯</div>
+                    <h3>职业兴趣测评</h3>
+                    <p class="assessment-desc">基于霍兰德职业兴趣理论，探索适合您的职业方向</p>
+                    <div class="assessment-info">
+                        <span>⏱️ 4分钟</span>
+                        <span>📝 15题</span>
+                    </div>
+                    <button class="btn-card">开始测评</button>
+                </div>
+
+                <div class="assessment-card" onclick="startAssessment('learning')">
+                    <div class="assessment-icon">📚</div>
+                    <h3>学习风格测评</h3>
+                    <p class="assessment-desc">了解您的学习偏好和认知风格</p>
+                    <div class="assessment-info">
+                        <span>⏱️ 3分钟</span>
+                        <span>📝 10题</span>
+                    </div>
+                    <button class="btn-card">开始测评</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.location.href='/'" class="btn-secondary">
+                    返回首页
+                </button>
+                <button onclick="startAllAssessments()" class="btn-primary">
+                    完成全部测评
+                </button>
+                <button onclick="viewComprehensiveReport()" class="btn-success" id="viewReportBtn" style="display: none;">
+                    查看综合报告
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+
+    <script>
+        function loadProgress() {
+            fetch('/api/progress')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateProgressUI(data.progress);
+                    }
+                })
+                .catch(error => {
+                    console.error('加载进度失败:', error);
+                });
+        }
+
+        function updateProgressUI(progress) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const progressDetails = document.getElementById('progressDetails');
+            const viewReportBtn = document.getElementById('viewReportBtn');
+
+            progressFill.style.width = progress.percentage + '%';
+            progressText.textContent = `已完成 ${progress.completed.length}/${progress.total} 个测评`;
+
+            if (progress.completed.length === 0) {
+                progressDetails.innerHTML = '<p>您还没有完成任何测评，请选择上方的测评开始。</p>';
+            } else {
+                let completedHTML = '<p><strong>已完成的测评：</strong></p><ul>';
+                progress.completed.forEach(type => {
+                    completedHTML += `<li>✅ ${progress.titles[type]} <button onclick="resetAssessment('${type}')" class="btn-reset">重新测试</button></li>`;
+                });
+                completedHTML += '</ul>';
+
+                if (progress.remaining.length > 0) {
+                    completedHTML += '<p><strong>还需要完成的测评：</strong></p><ul>';
+                    progress.remaining.forEach(type => {
+                        completedHTML += `<li>⏳ ${progress.titles[type]}</li>`;
+                    });
+                    completedHTML += '</ul>';
+                }
+
+                progressDetails.innerHTML = completedHTML;
+            }
+
+            if (progress.percentage === 100) {
+                viewReportBtn.style.display = 'inline-block';
+            } else {
+                viewReportBtn.style.display = 'none';
+            }
+        }
+
+        // 重新测试函数
+        function resetAssessment(type) {
+            if (confirm('确定要重新测试这个测评吗？当前测评结果将被清除。')) {
+                fetch(`/api/reset/${type}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('测评已重置，即将开始重新测试');
+                        window.location.href = `/assessment/${type}`;
+                    } else {
+                        alert('重置失败，请重试');
+                    }
+                })
+                .catch(error => {
+                    console.error('重置失败:', error);
+                    alert('重置失败，请重试');
+                });
+            }
+        }
+
+        function startAssessment(type) {
+            window.location.href = `/assessment/${type}`;
+        }
+
+        function startAllAssessments() {
+            window.location.href = '/assessment/personality';
+        }
+
+        function viewComprehensiveReport() {
+            window.location.href = '/comprehensive-report';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+    </script>
+</body>
+</html>

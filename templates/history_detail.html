@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史记录详情 - AI潜能测评系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>{{ assessment_title }}</h1>
+            <p class="subtitle">历史记录详情</p>
+        </header>
+
+        <main class="main-content">
+            <div class="result-section">
+                <div class="result-header">
+                    <h2>测评结果</h2>
+                    <p class="result-date">测评时间：{{ result_date }}</p>
+                </div>
+
+                <div class="result-content">
+                    <div class="result-card">
+                        <h3>📊 测评概览</h3>
+                        <div class="overview-content">
+                            <div class="overview-item">
+                                <span class="label">测评类型：</span>
+                                <span class="value">{{ assessment_title }}</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="label">完成题目：</span>
+                                <span class="value">{{ completed_questions }}题</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="label">测评状态：</span>
+                                <span class="value status-completed">已完成</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>🤖 AI分析结果</h3>
+                        <div class="analysis-content" id="aiAnalysis">
+                            {{ result.analysis | safe }}
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>🎯 个性化建议</h3>
+                        <div class="suggestions-content" id="suggestions">
+                            {{ result.suggestions | safe }}
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>📈 发展路径</h3>
+                        <div class="career-path-content" id="careerPath">
+                            {{ result.career_path | safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.location.href='/history'" class="btn-secondary">
+                    返回历史
+                </button>
+                <button onclick="window.location.href='/assessment'" class="btn-primary">
+                    继续测评
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+</body>
+</html>

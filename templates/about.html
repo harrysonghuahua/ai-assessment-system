@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测评说明 - AI潜能测评系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>测评说明</h1>
+            <p class="subtitle">了解我们的测评体系和理论基础</p>
+        </header>
+
+        <main class="main-content">
+            <div class="about-section">
+                <div class="about-card">
+                    <h2>🎯 测评体系概述</h2>
+                    <p>本测评系统基于现代心理学和职业发展理论，通过四个维度的综合评估，为用户提供全面、科学、专业的潜能分析和职业发展建议。</p>
+                    <div class="system-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">🔬</span>
+                            <div class="feature-content">
+                                <h4>科学理论基础</h4>
+                                <p>基于MBTI、Big Five、霍兰德理论等经典心理学模型</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🤖</span>
+                            <div class="feature-content">
+                                <h4>AI智能分析</h4>
+                                <p>运用大语言模型进行深度分析和个性化建议</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📊</span>
+                            <div class="feature-content">
+                                <h4>多维度评估</h4>
+                                <p>从性格、能力、兴趣、学习风格四个维度全面评估</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <div class="feature-content">
+                                <h4>个性化建议</h4>
+                                <p>根据测评结果提供针对性的发展建议和职业路径</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>🧠 性格测评</h2>
+                    <div class="assessment-detail">
+                        <div class="detail-section">
+                            <h4>理论基础</h4>
+                            <p>基于<strong>MBTI性格类型理论</strong>和<strong>五大人格模型（Big Five）</strong>，这是心理学领域最权威的性格测评理论。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>测评维度</h4>
+                            <ul>
+                                <li><strong>外向性/内向性</strong>：能量获取方式和社交偏好</li>
+                                <li><strong>开放性</strong>：对新经验的接受程度和创造力</li>
+                                <li><strong>尽责性</strong>：组织性、自律性和目标导向</li>
+                                <li><strong>宜人性</strong>：合作性、同理心和人际和谐</li>
+                                <li><strong>神经质</strong>：情绪稳定性和压力应对</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>应用价值</h4>
+                            <p>帮助您了解自己的性格特点，在职业选择、人际交往、团队协作等方面做出更明智的决策。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>💪 能力测评</h2>
+                    <div class="assessment-detail">
+                        <div class="detail-section">
+                            <h4>理论基础</h4>
+                            <p>基于<strong>加德纳多元智能理论</strong>和<strong>核心职业能力模型</strong>，评估您的认知能力和职业技能。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>测评维度</h4>
+                            <ul>
+                                <li><strong>逻辑思维能力</strong>：分析、推理和问题解决能力</li>
+                                <li><strong>创新能力</strong>：创造性思维和新颖想法产生</li>
+                                <li><strong>沟通能力</strong>：表达、倾听和人际交流能力</li>
+                                <li><strong>执行能力</strong>：计划、组织和任务完成能力</li>
+                                <li><strong>学习能力</strong>：知识获取和技能掌握能力</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>应用价值</h4>
+                            <p>识别您的核心优势和待发展领域，为技能提升和职业规划提供依据。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>🎯 职业兴趣测评</h2>
+                    <div class="assessment-detail">
+                        <div class="detail-section">
+                            <h4>理论基础</h4>
+                            <p>基于<strong>霍兰德职业兴趣理论（RIASEC模型）</strong>，这是职业规划领域应用最广泛的理论之一。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>测评维度</h4>
+                            <ul>
+                                <li><strong>现实型（R）</strong>：喜欢动手操作和具体任务</li>
+                                <li><strong>研究型（I）</strong>：喜欢思考、分析和探索</li>
+                                <li><strong>艺术型（A）</strong>：喜欢创造、表达和审美</li>
+                                <li><strong>社会型（S）</strong>：喜欢帮助、教导和服务他人</li>
+                                <li><strong>企业型（E）</strong>：喜欢领导、影响和说服</li>
+                                <li><strong>常规型（C）</strong>：喜欢有序、规范和细节工作</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>应用价值</h4>
+                            <p>发现适合您的职业方向，提高职业满意度和成就感。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>📚 学习风格测评</h2>
+                    <div class="assessment-detail">
+                        <div class="detail-section">
+                            <h4>理论基础</h4>
+                            <p>基于<strong>科尔布学习风格模型</strong>和<strong>认知风格理论</strong>，了解您的学习偏好和认知特点。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>测评维度</h4>
+                            <ul>
+                                <li><strong>视觉型/言语型</strong>：信息接收和处理偏好</li>
+                                <li><strong>主动型/反思型</strong>：学习方式和思考模式</li>
+                                <li><strong>理论型/实践型</strong>：知识理解和应用偏好</li>
+                                <li><strong>独立型/协作型</strong>：学习环境和互动方式</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>应用价值</h4>
+                            <p>优化您的学习方法，提高学习效率和知识掌握程度。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>📋 测评流程</h2>
+                    <div class="process-flow">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>选择测评</h4>
+                                <p>从四个维度中选择要进行的测评</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>完成答题</h4>
+                                <p>根据真实想法回答测评问题</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>AI分析</h4>
+                                <p>系统自动进行深度分析和评估</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>查看报告</h4>
+                                <p>获取个性化的分析报告和建议</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>综合评估</h4>
+                                <p>完成所有测评后获得综合分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>⚠️ 注意事项</h2>
+                    <div class="notice-content">
+                        <ul>
+                            <li><strong>诚实回答</strong>：请根据您的真实想法和感受回答，不要选择"理想中"的答案</li>
+                            <li><strong>环境安静</strong>：在安静、不受打扰的环境中完成测评</li>
+                            <li><strong>第一印象</strong>：不要过度思考，选择最符合您第一印象的选项</li>
+                            <li><strong>参考性质</strong>：测评结果仅供参考，不应作为唯一决策依据</li>
+                            <li><strong>动态发展</strong>：人的特质会随时间和经历而变化，建议定期重新测评</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.location.href='/'" class="btn-secondary">
+                    返回首页
+                </button>
+                <button onclick="window.location.href='/assessment'" class="btn-primary">
+                    开始测评
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+</body>
+</html>

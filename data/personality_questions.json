@@ -1,0 +1,242 @@
+[
+    {
+        "question": "我是聚会中的活跃分子",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "外向性",
+        "reverse": false
+    },
+    {
+        "question": "我不太喜欢和陌生人交谈",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "外向性",
+        "reverse": true
+    },
+    {
+        "question": "我有很多兴趣爱好",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "开放性",
+        "reverse": false
+    },
+    {
+        "question": "我有丰富的想象力",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "开放性",
+        "reverse": false
+    },
+    {
+        "question": "我总是把事情做完",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "尽责性",
+        "reverse": false
+    },
+    {
+        "question": "我做事有条理",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "尽责性",
+        "reverse": false
+    },
+    {
+        "question": "我对他人的感受很敏感",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "宜人性",
+        "reverse": false
+    },
+    {
+        "question": "我关心他人",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "宜人性",
+        "reverse": false
+    },
+    {
+        "question": "我很容易紧张",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "神经质",
+        "reverse": false
+    },
+    {
+        "question": "我经常感到担忧",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "神经质",
+        "reverse": false
+    },
+    {
+        "question": "我喜欢成为注意力的中心",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "外向性",
+        "reverse": false
+    },
+    {
+        "question": "我更喜欢独自一人而不是与他人在一起",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "外向性",
+        "reverse": true
+    },
+    {
+        "question": "我喜欢尝试新的体验",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "开放性",
+        "reverse": false
+    },
+    {
+        "question": "我喜欢思考复杂的问题",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "开放性",
+        "reverse": false
+    },
+    {
+        "question": "我做事很细心",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "尽责性",
+        "reverse": false
+    },
+    {
+        "question": "我经常忘记把东西放回原处",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "尽责性",
+        "reverse": true
+    },
+    {
+        "question": "我信任他人",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "宜人性",
+        "reverse": false
+    },
+    {
+        "question": "我乐于助人",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "宜人性",
+        "reverse": false
+    },
+    {
+        "question": "我经常情绪低落",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "神经质",
+        "reverse": false
+    },
+    {
+        "question": "我容易情绪波动",
+        "options": [
+            "非常不同意",
+            "不同意",
+            "中立",
+            "同意",
+            "非常同意"
+        ],
+        "dimension": "神经质",
+        "reverse": false
+    }
+]

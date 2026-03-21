@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测评历史 - AI潜能测评系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>测评历史记录</h1>
+            <p class="subtitle">查看您过去的测评结果</p>
+        </header>
+
+        <main class="main-content">
+            <div class="history-container" id="historyContainer">
+                <div class="loading-spinner"></div>
+                <p>正在加载历史记录...</p>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.location.href='/assessment'" class="btn-secondary">
+                    继续测评
+                </button>
+                <button onclick="window.location.href='/'" class="btn-primary">
+                    返回首页
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 AI潜能测评与生涯导航系统 | 大创项目</p>
+        </footer>
+    </div>
+
+    <script>
+        function loadHistory() {
+            fetch('/api/history')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayHistory(data.history);
+                    } else {
+                        showError('加载历史记录失败');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('加载历史记录失败');
+                });
+        }
+
+        function displayHistory(history) {
+            const container = document.getElementById('historyContainer');
+            
+            if (history.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <h3>暂无测评记录</h3>
+                        <p>您还没有完成任何测评，快去试试吧！</p>
+                        <button onclick="window.location.href='/assessment'" class="btn-primary">
+                            开始测评
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="history-grid">';
+            
+            history.forEach((item, index) => {
+                const date = new Date(item.timestamp);
+                const formattedDate = date.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                html += `
+                    <div class="history-card" onclick="viewResult('${item.type}', ${index})">
+                        <div class="history-icon">${getIcon(item.type)}</div>
+                        <div class="history-info">
+                            <h3>${item.title}</h3>
+                            <p class="history-date">${formattedDate}</p>
+                            <p class="history-status">已完成 ${item.question_count} 题</p>
+                        </div>
+                        <div class="history-arrow">→</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function getIcon(type) {
+            const icons = {
+                'personality': '🧠',
+                'ability': '💪',
+                'interest': '🎯',
+                'learning': '📚'
+            };
+            return icons[type] || '📋';
+        }
+
+        function viewResult(type, index) {
+            window.location.href = `/history/${type}/${index}`;
+        }
+
+        function showError(message) {
+            document.getElementById('historyContainer').innerHTML = `
+                <div class="error-state">
+                    <p>${message}</p>
+                    <button onclick="loadHistory()" class="btn-secondary">重试</button>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHistory();
+        });
+    </script>
+</body>
+</html>
