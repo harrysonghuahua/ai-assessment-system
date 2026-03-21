@@ -348,14 +348,28 @@ def generate_comprehensive_analysis(all_results):
 """
     
     try:
+        # 使用配置的AI提供商
+        api_provider = os.getenv('AI_PROVIDER', 'zhipu').lower()
+        
+        if api_provider == 'zhipu':
+            # 使用智谱AI
+            api_key = os.getenv('ZHIPU_API_KEY', 'your-zhipu-api-key-here')
+            api_url = 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
+            model = os.getenv('ZHIPU_MODEL', 'glm-4')
+        else:
+            # 使用豆包（备用）
+            api_key = os.getenv('DOUBAO_API_KEY', 'your-api-key-here')
+            api_url = 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
+            model = os.getenv('DOUBAO_MODEL', 'ep-20250318144958-6qk6m')
+        
         response = requests.post(
-            'https://ark.cn-beijing.volces.com/api/v3/chat/completions',
+            api_url,
             headers={
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 4f6d6f9c-8e7a-4b3f-9c2d-1e5f6a7b8c9d'
+                'Authorization': f'Bearer {api_key}'
             },
             json={
-                'model': 'ep-20250318144958-6qk6m',
+                'model': model,
                 'messages': [
                     {'role': 'system', 'content': '你是一个专业的心理咨询师和职业规划师。'},
                     {'role': 'user', 'content': prompt}
