@@ -53,7 +53,7 @@ ai-career-assessment/
 ### 1. 克隆项目
 
 ```bash
-cd /Users/songhuawei/Desktop/trial
+cd /Users/songhuawei/Desktop/trial/ai-career-assessment
 ```
 
 ### 2. 创建虚拟环境（推荐）
