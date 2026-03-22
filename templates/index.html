@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI潜能测评与生涯导航系统</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_modern.css') }}">
 </head>
 <body>
     <div class="container">
@@ -43,19 +43,21 @@
             </div>
 
             <div class="cta-section">
-                <button onclick="window.location.href='/assessment'" class="btn-primary">
-                    开始测评
-                </button>
-                <button onclick="window.location.href='/about'" class="btn-secondary" style="margin-left: 15px;">
-                    测评说明
-                </button>
-                <button onclick="window.location.href='/comprehensive-report'" class="btn-secondary" style="margin-left: 15px;">
-                    查看综合报告
-                </button>
-                <button onclick="window.location.href='/history'" class="btn-secondary" style="margin-left: 15px;">
-                    查看历史记录
-                </button>
-                <p class="note">预计完成时间：15-20分钟 | 基于MBTI、Big Five、霍兰德理论等经典心理学模型</p>
+                <h3>开始您的潜能探索之旅</h3>
+                <p>通过四个维度的专业测评，AI将为您生成个性化的潜能分析和生涯发展建议</p>
+                <div style="margin-top: 25px;">
+                    <a href="/assessment" class="btn-primary">
+                        立即开始测评
+                    </a>
+                    <a href="/about" class="btn-secondary" style="margin-left: 15px;">
+                        了解测评详情
+                    </a>
+                </div>
+                <div style="margin-top: 20px; color: #666; font-size: 0.9em;">
+                    <p>📊 预计完成时间：15-20分钟</p>
+                    <p>🧠 基于MBTI、Big Five、霍兰德理论等经典心理学模型</p>
+                    <p>🤖 结合AI大模型进行深度分析</p>
+                </div>
             </div>
         </main>
 
